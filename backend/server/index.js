@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
-import restaurantRoutes from './routes/restaurants.js';
+// import restaurantRoutes from './routes/restaurants.js'; // 🚫 Missing file
 import menuRoutes from './routes/menu.js';
 import orderRoutes from './routes/orders.js';
 import userRoutes from './routes/users.js';
@@ -17,7 +17,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://your-frontend.onrender.com', // ✅ Replace with your actual frontend Render URL
+  credentials: true
+}));
 app.use(express.json());
 
 // Connect to MongoDB
@@ -27,7 +30,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/foodDeliv
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/restaurants', restaurantRoutes);
+// app.use('/api/restaurants', restaurantRoutes); // 🚫 Disabled to avoid crash
 app.use('/api/menu', menuRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
